@@ -1,0 +1,10 @@
+
+.gitignore
+.npmignore
+
+npm-debug.log
+
+node_modules
+test
+dist
+download

@@ -1,9 +1,9 @@
-import { validHtml } from 'html-parse-regex'
+import { htmlValidator } from 'html-parse-regex'
 import { recall, getHash } from 'dejavu-call'
 import { isString, isObject, ifThrow } from 'pytils'
 import { readQuery } from './query'
 
-const throwIfHtmlInvalid = validHtml('fx-query')
+const throwIfHtmlInvalid = htmlValidator('fx-query')
 
 const memorizeReadQuery = queryString => recall(
   'fx-query-compile',

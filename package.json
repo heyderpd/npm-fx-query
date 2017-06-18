@@ -1,7 +1,7 @@
 {
   "name": "fx-query",
   "version": "0.5.0",
-  "description": "",
+  "description": "Make queries in html returned by html-parse-regex",
   "main": "dist/main.js",
   "scripts": {
     "transpile": "babel src --out-dir dist",
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/heyderpd/npm-fx-query#readme",
   "dependencies": {
     "dejavu-call": "^0.7.3",
-    "html-parse-regex": "^1.1.0",
+    "html-parse-regex": "^1.1.1",
     "pytils": "^1.31.0"
   },
   "devDependencies": {

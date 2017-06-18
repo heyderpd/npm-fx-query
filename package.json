@@ -1,0 +1,34 @@
+{
+  "name": "fx-query",
+  "version": "0.5.0",
+  "description": "",
+  "main": "dist/main.js",
+  "scripts": {
+    "transpile": "babel src --out-dir dist",
+    "test": "mocha --compilers js:babel-register --reporter spec 'test/*.spec.js'",
+    "build": "npm run transpile && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyderpd/npm-fx-query.git"
+  },
+  "keywords": [],
+  "author": "NPM stream web <heyderpd@gmail.com> (http://heyderpd.github.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heyderpd/npm-fx-query/issues"
+  },
+  "homepage": "https://github.com/heyderpd/npm-fx-query#readme",
+  "dependencies": {
+    "dejavu-call": "^0.7.3",
+    "html-parse-regex": "^1.1.0",
+    "pytils": "^1.31.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1"
+  }
+}

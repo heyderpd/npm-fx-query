@@ -5,6 +5,8 @@ import { readQuery } from './query'
 
 const throwIfHtmlInvalid = htmlValidator('fx-query')
 
+export const html = { obj: null }
+
 const memorizeReadQuery = queryString => recall(
   'fx-query-compile',
   readQuery,
@@ -27,7 +29,8 @@ export const compileQuery = (queryString, memorize = true) => {
 }
 
 export const runQuery = (htmlObj, queryString, memorize = true) => {
-  throwIfHtmlInvalid(htmlObj)  
+  throwIfHtmlInvalid(htmlObj)
+  html.obj = htmlObj
   ifThrow(
     !isString(queryString),
     'fx-query: queryString is a essential! and need to be a string')

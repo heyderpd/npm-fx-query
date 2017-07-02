@@ -1,4 +1,5 @@
 import { ifThrow, isArray, isString, path } from 'pytils'
+import { html } from './main'
 
 export const emptyList = () => []
 
@@ -6,31 +7,41 @@ export const nothing = () => undefined
 
 export const _getFirst = list => isArray(list) ? list[0] : undefined
 
-export const hasTag = name => node => node.tag === name
+export const hasTag = name => node => path(['tag'], node) === name
 
-export const filterWith = (list, With) => list && list.filter ? list.filter(With) : list
+export const filterWith = (list, With) => path(['filter'], list) ? list.filter(With) : list
 
-export const removeEmpty = list => filterWith(list, Boolean)
+export const removeEmpty = list => isArray(list) ? filterWith(list, Boolean) : list
 
 export const hasAttr = key => {
   const _getAttr = getAttr(key)
   return node => !!_getAttr(node)
 }
 
+export const hasAttrEq = (key, value) => {
+  const _getAttr = getAttr(key)
+  return node => _getAttr(node) === value
+}
+
+export const hasClassEq = value => {
+  const _getAttr = getAttr('class')
+  return node => {
+    const Class = _getAttr(node)
+    return Class ? Class.indexOf(value) >= 0 : false
+  }
+}
+
 export const getAttr = key => {
   switch (key) {
     case 'text':
-      return node => node && node.text ? node.text : undefined
+      return node => path(['text'], node)
     
     case 'class':
-      return node => {
-        const Class = path(['attrs', 'class'], node)
-        return Class ? Class : undefined
-      }
+      return node => path(['class'], node)
     
     default:
       return key
-        ? node => node && node.attrs ? node.attrs[key] : undefined
+        ? node => path(['attrs', key], node)
         : nothing
   }
 }
@@ -39,9 +50,14 @@ export const getList = direction => node =>
   node.link && node.link[direction] ? node.link[direction] : []
 
 export const flatten = Lists => {
-  let flat = []
-  Lists.map(list => flat = flat.concat(list))
-  return flat
+  if (isArray(Lists)) {
+    let flat = []
+    Lists.map(
+      list => flat = flat.concat(list))
+    return flat
+  } else {
+    return Lists
+  }
 }
 
 export const deduplicate = duplicate => {
@@ -83,3 +99,19 @@ export const splitListWith = process => list => {
     not: not
   }
 }
+
+export const getHtml = node => {
+  const start = path(['start'], node)
+  const end = path(['end'], node)
+  if (start >= 0 && end >= start) {
+    const file = path(['obj', 'file'], html)
+    if (file) {
+      return file.substr(start, end)
+    }
+  }
+  return undefined
+}
+
+const removeScripts = /<script[\w\W]*?script>/gim
+
+export const clearHtml = html => html.replace(removeScripts, '')

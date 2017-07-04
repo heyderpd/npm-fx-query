@@ -1,5 +1,6 @@
 import { composeDown, toArray, path } from 'pytils'
 import { getFirst, get, all, first, allChilds, firstChilds, allBelow, firstBelow } from './compositions'
+import { throwIfHtmlInvalid } from './main'
 
 const spaces = `\\s+`
 const anythings = `[\\w\\W]+`
@@ -132,11 +133,19 @@ const readInstruction = instructionStr => {
   }
 }
 
+const queryEngine = compiled => {
+  const toAsk = composeDown(...compiled)
+  return htmlObj => {
+    throwIfHtmlInvalid(htmlObj)
+    return toAsk(htmlObj.list)
+  }
+}
+
 export const readQuery = query => {
   try {
     const compiled = clearAndSplit(query)
       .map(readInstruction)
-    return composeDown(...compiled)
+    return queryEngine(compiled)
   } catch (erro) {
     throw `fx-query: ${erro}`
   }

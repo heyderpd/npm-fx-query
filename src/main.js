@@ -3,7 +3,7 @@ import { recall, getHash } from 'dejavu-call'
 import { isString, isObject, ifThrow } from 'pytils'
 import { readQuery } from './query'
 
-const throwIfHtmlInvalid = htmlValidator('fx-query')
+export const throwIfHtmlInvalid = htmlValidator('fx-query')
 
 export const html = { obj: null }
 
@@ -15,7 +15,7 @@ const memorizeReadQuery = queryString => recall(
 const memorizeRunQuery = (htmlObj, queryString, memorize) => recall(
   `fx-query-run`,
   compileQuery(queryString, memorize),
-  [htmlObj.list],
+  [htmlObj],
   `${getHash(queryString)}-${htmlObj.hash}`)
 
 export const compileQuery = (queryString, memorize = true) => {
@@ -37,5 +37,5 @@ export const runQuery = (htmlObj, queryString, memorize = true) => {
   
   return memorize
     ? memorizeRunQuery(htmlObj, queryString, memorize)
-    : compileQuery(queryString, memorize)(htmlObj.list)
+    : compileQuery(queryString, memorize)(htmlObj)
 }

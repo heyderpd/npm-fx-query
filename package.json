@@ -1,6 +1,6 @@
 {
   "name": "fx-query",
-  "version": "0.7.5",
+  "version": "0.7.7",
   "description": "Make queries in html returned by html-parse-regex",
   "main": "dist/main.js",
   "scripts": {

@@ -99,7 +99,7 @@ export const getHtml = protectArray(node => {
   if (start >= 0 && end >= start) {
     const file = path(['obj', 'file'], html)
     if (isString(file)) {
-      return file.substr(start, end)
+      return file.substr(start, end -start)
     }
   }
   return node
@@ -107,4 +107,7 @@ export const getHtml = protectArray(node => {
 
 const removeScripts = /<script[\w\W]*?script>/gim
 
-export const clearHtml = protectArray(html => html.replace(removeScripts, ''))
+export const clearHtml = protectArray(html =>
+  path(['replace'], html)
+    ? html.replace(removeScripts, '')
+    : html)
